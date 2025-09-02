@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon University - Excellence in Education</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 35, 126, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(26, 35, 126, 1);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #64b5f6;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #64b5f6;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #1a237e 0%, #3f51b5 50%, #64b5f6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a"><stop offset="20%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><rect width="100" height="20" fill="url(%23a)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.8s;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 1.1s;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #ff4081;
+            color: white;
+            border: 2px solid #ff4081;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: #ff4081;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 64, 129, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #1a237e;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a237e;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: #64b5f6;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff4081, #ff6ec7);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1a237e;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #1a237e, #3f51b5);
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #ff4081, #ff6ec7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+        }
+
+        /* Programs Section */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .program-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .program-image {
+            height: 200px;
+            background: linear-gradient(135deg, #64b5f6, #42a5f5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .program-content {
+            padding: 1.5rem;
+        }
+
+        .program-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1a237e;
+        }
+
+        /* Campus Life */
+        .campus-life {
+            background: #f8f9ff;
+        }
+
+        .campus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .campus-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .campus-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ff4081, #f06292);
+            border-radius: 20px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a237e;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #64b5f6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #64b5f6;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">🎓 Horizon University</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#programs">Programs</a></li>
+                <li><a href="#campus">Campus</a></li>
+                <li><a href="#admissions">Admissions</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Welcome to Horizon University</h1>
+            <p>Shaping tomorrow's leaders through innovative education, cutting-edge research, and transformative experiences.</p>
+            <div class="cta-buttons">
+                <a href="#admissions" class="btn btn-primary">Apply Now</a>
+                <a href="#programs" class="btn btn-secondary">Explore Programs</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">Why Choose Horizon University?</h2>
+            <p class="section-subtitle">We're committed to providing world-class education that prepares students for success in an ever-evolving global landscape.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Academic Excellence</h3>
+                    <p>Top-ranked programs taught by world-renowned faculty with cutting-edge curriculum designed for today's challenges.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔬</div>
+                    <h3>Research Innovation</h3>
+                    <p>State-of-the-art research facilities and opportunities to work alongside leading researchers in groundbreaking projects.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Global Community</h3>
+                    <p>Diverse student body from over 80 countries, creating a rich multicultural learning environment.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <h3>Career Success</h3>
+                    <p>95% job placement rate with extensive alumni network and career services support.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Student Life</h3>
+                    <p>Over 200 clubs and organizations, NCAA Division I athletics, and vibrant campus community.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3>Innovation Hub</h3>
+                    <p>Entrepreneurship programs, startup incubators, and technology transfer opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section stats">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Our Impact by Numbers</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>15,000+</h3>
+                    <p>Students Enrolled</p>
+                </div>
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>Faculty Members</p>
+                </div>
+                <div class="stat-item">
+                    <h3>95%</h3>
+                    <p>Job Placement Rate</p>
+                </div>
+                <div class="stat-item">
+                    <h3>$2.5B</h3>
+                    <p>Research Funding</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="section" id="programs">
+        <div class="container">
+            <h2 class="section-title">Academic Programs</h2>
+            <p class="section-subtitle">Discover programs that align with your passion and career goals across multiple disciplines.</p>
+            
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-image">💻</div>
+                    <div class="program-content">
+                        <h3>Computer Science & Engineering</h3>
+                        <p>Master the technologies shaping our future with programs in AI, cybersecurity, software development, and data science.</p>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-image">💰</div>
+                    <div class="program-content">
+                        <h3>Business & Management</h3>
+                        <p>Develop leadership skills with our MBA, finance, marketing, and entrepreneurship programs.</p>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-image">🧬</div>
+                    <div class="program-content">
+                        <h3>Life Sciences</h3>
+                        <p>Advance healthcare and biotechnology through our biology, chemistry, and biomedical engineering programs.</p>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-image">⚖️</div>
+                    <div class="program-content">
+                        <h3>Law & Policy</h3>
+                        <p>Shape justice and policy with our law school and public administration programs.</p>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-image">🎨</div>
+                    <div class="program-content">
+                        <h3>Arts & Humanities</h3>
+                        <p>Explore creativity and critical thinking through literature, philosophy, history, and fine arts.</p>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-image">🏥</div>
+                    <div class="program-content">
+                        <h3>Health Sciences</h3>
+                        <p>Prepare for healthcare careers with our nursing, medicine, and public health programs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campus Life Section -->
+    <section class="section campus-life" id="campus">
+        <div class="container">
+            <h2 class="section-title">Campus Life</h2>
+            <p class="section-subtitle">Experience a vibrant community where learning extends far beyond the classroom.</p>
+            
+            <div class="campus-grid">
+                <div class="campus-item">
+                    <div class="campus-icon">🏠</div>
+                    <h3>Housing</h3>
+                    <p>Modern residence halls and apartments with all amenities</p>
+                </div>
+                <div class="campus-item">
+                    <div class="campus-icon">🍽️</div>
+                    <h3>Dining</h3>
+                    <p>Award-winning dining services with diverse cuisine options</p>
+                </div>
+                <div class="campus-item">
+                    <div class="campus-icon">🏃‍♀️</div>
+                    <h3>Recreation</h3>
+                    <p>State-of-the-art fitness centers and recreational facilities</p>
+                </div>
+                <div class="campus-item">
+                    <div class="campus-icon">📚</div>
+                    <h3>Libraries</h3>
+                    <p>World-class libraries with extensive digital resources</p>
+                </div>
+                <div class="campus-item">
+                    <div class="campus-icon">🎭</div>
+                    <h3>Arts & Culture</h3>
+                    <p>Theaters, galleries, and performance venues</p>
+                </div>
+                <div class="campus-item">
+                    <div class="campus-icon">🚌</div>
+                    <h3>Transportation</h3>
+                    <p>Free campus shuttle and public transit access</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admissions Section -->
+    <section class="section" id="admissions">
+        <div class="container">
+            <h2 class="section-title">Admissions</h2>
+            <p class="section-subtitle">Join our community of scholars and innovators. Your journey starts here.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3>Apply Online</h3>
+                    <p>Submit your application through our streamlined online portal. Start your journey with just a few clicks.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Financial Aid</h3>
+                    <p>Over $100M in scholarships and financial aid available. We make education accessible to all qualified students.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Visit Campus</h3>
+                    <p>Schedule a tour to experience our beautiful campus and vibrant community firsthand.</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="#" class="btn btn-primary">Start Your Application</a>
+                <a href="#" class="btn btn-secondary">Schedule a Visit</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p>📍 123 University Boulevard<br>
+                    Education City, EC 12345</p>
+                    <p>📞 (555) 123-4567</p>
+                    <p>✉️ admissions@horizon.edu</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Academic Calendar</a></li>
+                        <li><a href="#">Student Portal</a></li>
+                        <li><a href="#">Library</a></li>
+                        <li><a href="#">Career Services</a></li>
+                        <li><a href="#">Alumni Network</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Course Catalog</a></li>
+                        <li><a href="#">Research</a></li>
+                        <li><a href="#">News & Events</a></li>
+                        <li><a href="#">Campus Safety</a></li>
+                        <li><a href="#">IT Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Horizon University. All rights reserved. | Privacy Policy | Terms of Use</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Animate elements when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections
+        document.querySelectorAll('.feature-card, .program-card, .campus-item, .stat-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Counter animation for stats
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                
+                // Format numbers nicely
+                if (target >= 1000000000) {
+                    element.textContent = (current / 1000000000).toFixed(1) + 'B';
+                } else if (target >= 1000000) {
+                    element.textContent = (current / 1000000).toFixed(1) + 'M';
+                } else if (target >= 1000) {
+                    element.textContent = (current / 1000).toFixed(0) + 'K+';
+                } else if (target < 100) {
+                    element.textContent = Math.floor(current) + '%';
+                } else {
+                    element.textContent = Math.floor(current).toLocaleString() + '+';
+                }
+            }, 20);
+        }
+
+        // Trigger counter animation when stats section comes into view
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statItems = entry.target.querySelectorAll('.stat-item h3');
+                    const values = [15000, 500, 95, 2500000000]; // Actual values
+                    
+                    statItems.forEach((item, index) => {
+                        animateCounter(item, values[index]);
+                    });
+                    
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+    </script>
+</body>
+</html>
